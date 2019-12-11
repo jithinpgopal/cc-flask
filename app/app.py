@@ -46,6 +46,7 @@ def search():
     print(search_qry)
     mycursor.execute(search_qry)
     searchresult = mycursor.fetchall()
+    mycursor.close()
     searched_list = {}
     for x in searchresult:
         searched_list[x[0]]=x[1]
