@@ -13,6 +13,7 @@ WORKDIR /app
 # Install any needed packages specified in requirements.txt
 RUN pip install flask
 RUN pip install mysql-connector
+RUN pip install ibm-cos-sdk
 
 COPY . /app
 
