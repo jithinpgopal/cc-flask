@@ -15,4 +15,4 @@ RUN pip install flask
 RUN pip install mysql-connector
 
 # Run app.py when the container launches
-CMD python app.py
+CMD python app/app.py
