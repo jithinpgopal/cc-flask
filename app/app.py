@@ -127,10 +127,12 @@ def get_image(bucket_name, item_name):
     print("Retrieving item from bucket: {0}, key: {1}".format(bucket_name, item_name))
     try:
         file = cos.Object(bucket_name, item_name).get()
-#         print (type((file["Body"])))
-        image_file = open("9015.jpg", "wb")
-        image_file.write(file["Body"].read())
-        image_file.close()
+        # print (type((file["Body"].read())))
+        # image_file = open("9015.jpg", "wb")
+        # image_file.write(file["Body"].read())
+        # image_file.close()
+        image_file_byte=file["Body"]
+        return image_file_byte
     except ClientError as be:
         print("CLIENT ERROR: {0}\n".format(be))
     except Exception as e:
@@ -191,8 +193,10 @@ def search():
 @app.route('/find_image', methods=['GET'])
 def find_image():
     imagenum = request.args.get('imagenum')
-    return send_file('9015.jpg', mimetype='image/gif')
-  
+    image_name = imagenum + ".jpg"
+    print(image_name)
+    img_byte = get_image('gamification-cos-standard-tkq', image_name)
+    return send_file(img_byte, mimetype='image/gif')
   
   
 #app.run()
