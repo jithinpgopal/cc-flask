@@ -14,5 +14,7 @@ WORKDIR /app
 RUN pip install flask
 RUN pip install mysql-connector
 
+COPY . /app
+
 # Run app.py when the container launches
-CMD python cc-flask/app/app.py
+CMD python app.py
