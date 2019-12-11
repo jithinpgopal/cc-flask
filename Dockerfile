@@ -11,7 +11,7 @@ EXPOSE 5000
 WORKDIR /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install -r app/requirements.txt
 
 # Run app.py when the container launches
-CMD python app.py
+CMD python app/app.py
