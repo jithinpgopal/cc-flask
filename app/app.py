@@ -15,4 +15,4 @@ def first():
     return '''<h1>Container Crush Testing</h1>
 <p>I have no idea what to type here</p>'''
 
-app.run()
+app.run(host='0.0.0.0',port=5000,debug=True)
