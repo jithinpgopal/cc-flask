@@ -195,8 +195,11 @@ def find_image():
     imagenum = request.args.get('imagenum')
     image_name = imagenum + ".jpg"
     print(image_name)
-    img_byte = get_image('gamification-cos-standard-tkq', image_name)
-    return send_file(img_byte, mimetype='image/gif')
+    try:
+        img_byte = get_image('gamification-cos-standard-tkq', image_name)
+        return send_file(img_byte, mimetype='image/gif')
+    except Exception as e:
+        return ("Image Not Found")
   
   
 #app.run()
