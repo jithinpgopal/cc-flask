@@ -11,7 +11,8 @@ EXPOSE 5000
 WORKDIR /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install flask
+RUN pip install mysql-connector
 
 # Run app.py when the container launches
 CMD python app.py
