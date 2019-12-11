@@ -14,6 +14,7 @@ app = flask.Flask(__name__)
 mycursor = mydb.cursor()
 mycursor.execute("SELECT ITEM_NUMBER,DESCRIPTION FROM sampledb.XXIBM_PRODUCT_SKU")
 myresult = mycursor.fetchall()
+mycursor.close()
 #for x in myresult:
  # print(x[0])
 
