@@ -2,11 +2,20 @@ import flask
 import mysql.connector
 from flask import request
 
+#mydb = mysql.connector.connect(
+#  host="104.154.143.166",
+#  user="xxuser",
+#  passwd="welcome1DB"
+#)
+
 mydb = mysql.connector.connect(
-  host="104.154.143.166",
+  host="mysql.gamification.svc.cluster.local",
   user="xxuser",
-  passwd="welcome1DB"
+  passwd="welcome1"
 )
+
+
+
 
 #print(mydb)
 app = flask.Flask(__name__)
