@@ -179,12 +179,12 @@ def list_all():
 @app.route('/search', methods=['GET'])
 def search():
     searchterm = request.args.get('searchterm')
-    mycursor = mydb.cursor()
+    mycursor2 = mydb.cursor()
     search_qry = "SELECT ITEM_NUMBER,DESCRIPTION FROM sampledb.XXIBM_PRODUCT_SKU where DESCRIPTION like '%{}%'".format(searchterm)
     print(search_qry)
-    mycursor.execute(search_qry)
-    searchresult = mycursor.fetchall()
-    mycursor.close()
+    mycursor2.execute(search_qry)
+    searchresult = mycursor2.fetchall()
+    mycursor2.close()
     searched_list = {}
     for x in searchresult:
         searched_list[x[0]]=x[1]
