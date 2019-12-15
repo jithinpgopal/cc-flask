@@ -14,6 +14,7 @@ WORKDIR /app
 RUN pip install flask
 RUN pip install mysql-connector
 RUN pip install ibm-cos-sdk
+RUN pip install --upgrade "ibm-watson>=4.1.0"
 
 COPY . /app
 
