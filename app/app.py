@@ -4,12 +4,20 @@ from flask import request
 import ibm_boto3
 from ibm_botocore.client import Config, ClientError
 from flask import send_file
+import os
+from ibm_watson import SpeechToTextV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+import pprint
+import json
+
 
 # Constants for IBM COS values
-COS_ENDPOINT = "https://s3.us-south.cloud-object-storage.appdomain.cloud" # Current list avaiable at https://control.cloud-object-storage.cloud.ibm.com/v2/endpoints
+COS_ENDPOINT = "https://s3.us-south.cloud-object-storage.appdomain.cloud" # Current list avaiable at https://control.cloud-object-storage.cloud.ibm.com/v2/en
+dpoints
 COS_API_KEY_ID = "_bAzHuCAN1yPz4Rcg5CZY1Tbp0UOpshuMhpoNkIvJAa3"
 COS_AUTH_ENDPOINT = "https://iam.cloud.ibm.com/identity/token"
-COS_RESOURCE_CRN = "crn:v1:bluemix:public:cloud-object-storage:global:a/693fe8ead49b44b192004113d21b15c2:fce26086-5b77-42cc-b1aa-d388aa2853d7::" # eg "crn:v1:bluemix:public:cloud-object-storage:global:a/3bf0d9003abfb5d29761c3e97696b71c:d6f04d83-6c4f-4a62-a165-696756d63903::"
+COS_RESOURCE_CRN = "crn:v1:bluemix:public:cloud-object-storage:global:a/693fe8ead49b44b192004113d21b15c2:fce26086-5b77-42cc-b1aa-d388aa2853d7::" # eg "crn:v1
+:bluemix:public:cloud-object-storage:global:a/3bf0d9003abfb5d29761c3e97696b71c:d6f04d83-6c4f-4a62-a165-696756d63903::"
 
 # Create resource
 cos = ibm_boto3.resource("s3",
@@ -20,11 +28,21 @@ cos = ibm_boto3.resource("s3",
     endpoint_url=COS_ENDPOINT
                          )
 
+############## MySQL DB On Google Cloud
 mydb = mysql.connector.connect(
   host="104.154.143.166",
   user="xxuser",
   passwd="welcome1DB"
 )
+############## For Watson Speech to text
+authenticator = IAMAuthenticator('GPA4EoS1rdCv5JXfLCa4jy9DaW82d6BuTuJ0bTKKx1CT')
+speech_to_text = SpeechToTextV1(
+    authenticator=authenticator
+)
+
+speech_to_text.set_service_url('https://api.us-east.speech-to-text.watson.cloud.ibm.com')
+app = flask.Flask(__name__)
+
 
 #mydb = mysql.connector.connect(
 #  host="mysql.gamification.svc.cluster.local",
@@ -33,6 +51,7 @@ mydb = mysql.connector.connect(
 #)
 
 #print(mydb)
+
 app = flask.Flask(__name__)
 
 mycursor = mydb.cursor()
@@ -64,7 +83,6 @@ def get_bucket_contents(bucket_name):
     except Exception as e:
         print("Unable to retrieve bucket contents: {0}".format(e))
 
-# CC Bucket name  =  gamification-cos-standard-tkq
 
 def create_text_file(bucket_name, item_name, file_text):
     print("Creating new item: {0}".format(item_name))
@@ -148,13 +166,13 @@ def get_image(bucket_name, item_name):
 # delete_item('cloud-warriors', 'trial.txt')
 # delete_bucket('cloud-warrior')
 
-get_buckets()
+#get_buckets()
 # get_bucket_contents('cloud-warriors')
 # get_bucket_contents('gamification-cos-standard-tkq')
 
-get_image('gamification-cos-standard-tkq', '9015.jpg')
-  
-  
+#get_image('gamification-cos-standard-tkq', '9015.jpg')
+
+
 @app.route('/', methods=['GET'])
 def home():
     return '''<h1>Container Crush testing page</h1>
@@ -189,7 +207,7 @@ def search():
     for x in searchresult:
         searched_list[x[0]]=x[1]
     return searched_list
-  
+
 @app.route('/find_image', methods=['GET'])
 def find_image():
     imagenum = request.args.get('imagenum')
@@ -200,7 +218,21 @@ def find_image():
         return send_file(img_byte, mimetype='image/gif')
     except Exception as e:
         return ("Image Not Found")
-  
-  
+
+@app.route('/watson_search', methods=['POST'])
+def watson_search():
+    myfile  = request.files['file']
+    #json_file =  request.get_json(force=True)
+    #pprint(json_file)
+    for i in request.files:
+        print ("One more file")
+    for i in request.headers.items():
+        print(i)
+    speech_recognition_results = speech_to_text.recognize(audio=myfile).get_result()
+
+    return speech_recognition_results
+    #return("Return complete")
+
+
 #app.run()
 app.run(host='0.0.0.0',port=5000,debug=True)
