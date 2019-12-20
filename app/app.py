@@ -4,7 +4,7 @@ from flask import request
 import ibm_boto3
 from ibm_botocore.client import Config, ClientError
 from flask import send_file
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
 import os
 from ibm_watson import SpeechToTextV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
@@ -230,7 +230,7 @@ def find_image():
         return ("Image Not Found")
 
 @app.route('/watson_search', methods=['POST'])
-#@cross_origin()
+@cross_origin()
 def watson_search():
     myfile  = request.files['file']
     #json_file =  request.get_json(force=True)
