@@ -176,12 +176,10 @@ def get_image(bucket_name, item_name):
 # delete_item('cloud-warriors', 'trial.txt')
 # delete_bucket('cloud-warrior')
 
-get_buckets()
+# get_buckets()
 # get_bucket_contents('cloud-warriors')
 # get_bucket_contents('gamification-cos-standard-tkq')
 
-get_image('gamification-cos-standard-tkq', '9015.jpg')
-  
   
 @app.route('/', methods=['GET'])
 def home():
@@ -190,14 +188,8 @@ def home():
 <p> try /first or /listall or /search?searchterm=Shirt</p>
 '''
 
-
-# A route to return all of the available entries in our catalog.
-@app.route('/first', methods=['GET'])
-def first():
-    return '''<h1>Container Crush Testing</h1>
-<p>I have no idea what to type here</p>'''
-
 @app.route('/listall', methods=['GET'])
+@cross_origin()
 def list_all():
     all_list = {}
     for x in myresult:
@@ -205,6 +197,7 @@ def list_all():
     return all_list
 
 @app.route('/search', methods=['GET'])
+@cross_origin()
 def search():
     searchterm = request.args.get('searchterm')
     mycursor2 = mydb.cursor()
@@ -219,6 +212,7 @@ def search():
     return searched_list
   
 @app.route('/find_image', methods=['GET'])
+@cross_origin()
 def find_image():
     imagenum = request.args.get('imagenum')
     image_name = imagenum + ".jpg"
@@ -245,6 +239,7 @@ def watson_search():
     #return("Return complete")
 
 @app.route('/prod_search', methods=['GET'])
+@cross_origin()
 def prod_search():
     search_string = request.args.get('searchwords')
     search_array = search_string.split(' ')
