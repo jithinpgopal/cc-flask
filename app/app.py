@@ -4,6 +4,7 @@ from flask import request
 import ibm_boto3
 from ibm_botocore.client import Config, ClientError
 from flask import send_file
+from flask_cors import CORS
 import os
 from ibm_watson import SpeechToTextV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
@@ -40,7 +41,8 @@ speech_to_text = SpeechToTextV1(
 )
 
 speech_to_text.set_service_url('https://api.us-east.speech-to-text.watson.cloud.ibm.com')
-app = flask.Flask(__name__)
+
+
 
 
 #mydb = mysql.connector.connect(
@@ -59,6 +61,7 @@ CB_QRY_URL  = "http://35.208.159.10:8093/query/service"
 
 ## Flask 
 app = flask.Flask(__name__)
+CORS(app)
 
 mycursor = mydb.cursor()
 mycursor.execute("SELECT ITEM_NUMBER,DESCRIPTION FROM sampledb.XXIBM_PRODUCT_SKU")
