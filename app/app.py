@@ -9,6 +9,8 @@ from ibm_watson import SpeechToTextV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import pprint
 import json
+from requests.auth import HTTPBasicAuth
+import requests
 
 
 # Constants for IBM COS values
@@ -26,13 +28,12 @@ cos = ibm_boto3.resource("s3",
     endpoint_url=COS_ENDPOINT
                          )
 
-############## MySQL DB On Google Cloud
 mydb = mysql.connector.connect(
   host="104.154.143.166",
   user="xxuser",
   passwd="welcome1DB"
 )
-############## For Watson Speech to text
+
 authenticator = IAMAuthenticator('GPA4EoS1rdCv5JXfLCa4jy9DaW82d6BuTuJ0bTKKx1CT')
 speech_to_text = SpeechToTextV1(
     authenticator=authenticator
@@ -50,6 +51,13 @@ app = flask.Flask(__name__)
 
 #print(mydb)
 
+## Couchbase Full Text Search
+
+CB_URL = "http://35.208.159.10:8094/api/index/prodsearch/query"
+cb_auth=HTTPBasicAuth('Administrator', 'asdf1234')
+CB_QRY_URL  = "http://35.208.159.10:8093/query/service"
+
+## Flask 
 app = flask.Flask(__name__)
 
 mycursor = mydb.cursor()
@@ -81,6 +89,7 @@ def get_bucket_contents(bucket_name):
     except Exception as e:
         print("Unable to retrieve bucket contents: {0}".format(e))
 
+# CC Bucket name  =  gamification-cos-standard-tkq
 
 def create_text_file(bucket_name, item_name, file_text):
     print("Creating new item: {0}".format(item_name))
@@ -164,13 +173,13 @@ def get_image(bucket_name, item_name):
 # delete_item('cloud-warriors', 'trial.txt')
 # delete_bucket('cloud-warrior')
 
-#get_buckets()
+get_buckets()
 # get_bucket_contents('cloud-warriors')
 # get_bucket_contents('gamification-cos-standard-tkq')
 
-#get_image('gamification-cos-standard-tkq', '9015.jpg')
-
-
+get_image('gamification-cos-standard-tkq', '9015.jpg')
+  
+  
 @app.route('/', methods=['GET'])
 def home():
     return '''<h1>Container Crush testing page</h1>
@@ -205,7 +214,7 @@ def search():
     for x in searchresult:
         searched_list[x[0]]=x[1]
     return searched_list
-
+  
 @app.route('/find_image', methods=['GET'])
 def find_image():
     imagenum = request.args.get('imagenum')
@@ -227,10 +236,43 @@ def watson_search():
     for i in request.headers.items():
         print(i)
     speech_recognition_results = speech_to_text.recognize(audio=myfile).get_result()
-
+    #result_word = str(speech_recognition_results['results'][0]['alternatives'][0]['transcript']).split(' ', 1)[0]
     return speech_recognition_results
     #return("Return complete")
 
+@app.route('/prod_search', methods=['GET'])
+def prod_search():
+    search_string = request.args.get('searchwords')
+    search_array = search_string.split(' ')
+    conj_array = []
+    for i in search_array:
+        sub_qry = {}
+        sub_qry["match"] = "*" + str(i) + "*"
+        conj_array.append(sub_qry)
+    qry = {"conjuncts": conj_array}
+    r = requests.post(url=CB_URL, auth=cb_auth, json={"fields": ['*'], "highlight": {}, "query": qry, "size": 20})
+    data = r.json()
+    result_keys = []
+    for i in data['hits']:
+        result_keys.append(i['id'])
+    select_qry = "SELECT *  FROM CCPRODCTLG use keys {}".format(str(result_keys))
+    print(select_qry)
+    select_qry_json = {"statement": select_qry}
+    print(select_qry_json)
+    w = requests.post(url=CB_QRY_URL, auth=cb_auth, json=select_qry_json)
+    data1 = w.json()
+    qry_res = data1['results']
+    print(qry_res)
+    resultarray = []
+    search_return = {}
+    for i in qry_res:
+        one_row = i['CCPRODCTLG']
+        resultarray.append(one_row)
+        print(i['CCPRODCTLG'])
+    search_return["plannedEvents"] = resultarray
+    print(search_return)
+    return search_return
 
+ 
 #app.run()
 app.run(host='0.0.0.0',port=5000,debug=True)
