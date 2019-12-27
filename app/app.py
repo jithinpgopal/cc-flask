@@ -224,7 +224,7 @@ def find_image():
         return ("Image Not Found")
 
 @app.route('/watson_search', methods=['POST'])
-@cross_origin()
+# @cross_origin()
 def watson_search():
     myfile  = request.files['file']
     #json_file =  request.get_json(force=True)
