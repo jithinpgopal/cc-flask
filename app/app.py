@@ -247,7 +247,7 @@ def watson_search():
     #return("Return complete")
 
 @app.route('/prod_search', methods=['GET'])
-@cross_origin()
+# @cross_origin()
 def prod_search():
     search_string = request.args.get('searchwords')
     search_array = search_string.split(' ')
