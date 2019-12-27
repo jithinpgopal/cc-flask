@@ -61,7 +61,8 @@ CB_QRY_URL  = "http://35.208.159.10:8093/query/service"
 
 ## Flask 
 app = flask.Flask(__name__)
-CORS(app)
+# CORS(app)
+CORS(app, resources={r"/*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
 
 mycursor = mydb.cursor()
 mycursor.execute("SELECT ITEM_NUMBER,DESCRIPTION FROM sampledb.XXIBM_PRODUCT_SKU")
@@ -234,14 +235,15 @@ def watson_search():
     for i in request.headers.items():
         print(i)
     speech_recognition_results = speech_to_text.recognize(audio=myfile).get_result()
-    resp = flask.Response(speech_recognition_results)
-    resp.headers['Access-Control-Allow-Origin'] = "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"
-    print("Watson response Headers : ")
-    print(resp.headers['Access-Control-Allow-Origin'])
+#     resp = flask.Response(speech_recognition_results)
+#     resp.headers['Access-Control-Allow-Origin'] = "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"
+#     print("Watson response Headers : ")
+#     print(resp.headers['Access-Control-Allow-Origin'])
     #result_word = str(speech_recognition_results['results'][0]['alternatives'][0]['transcript']).split(' ', 1)[0]
     print(speech_recognition_results)
-    print(resp)
-    return resp
+#     print(resp)
+#     return resp
+    return speech_recognition_results
     #return("Return complete")
 
 @app.route('/prod_search', methods=['GET'])
