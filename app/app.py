@@ -280,11 +280,11 @@ def prod_search():
 #         print(i['CCPRODCTLG'])
     search_return["plannedEvents"] = resultarray
 #     print(search_return)
-    resp = flask.Response(search_return)
-    resp.headers['Access-Control-Allow-Origin'] = "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"
-#     return search_return
-    print(resp)
-    print(resp.headers['Access-Control-Allow-Origin'])
+#     resp = flask.Response(search_return)
+#     resp.headers['Access-Control-Allow-Origin'] = "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"
+    return search_return
+#     print(resp)
+#     print(resp.headers['Access-Control-Allow-Origin'])
     return resp
 
 #app.run()
