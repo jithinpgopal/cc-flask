@@ -239,7 +239,8 @@ def watson_search():
     print("Watson response Headers : ")
     print(resp.headers['Access-Control-Allow-Origin'])
     #result_word = str(speech_recognition_results['results'][0]['alternatives'][0]['transcript']).split(' ', 1)[0]
-    #return speech_recognition_results
+    print(speech_recognition_results)
+    print(resp)
     return resp
     #return("Return complete")
 
