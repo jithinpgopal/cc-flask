@@ -235,7 +235,7 @@ def watson_search():
         print(i)
     speech_recognition_results = speech_to_text.recognize(audio=myfile).get_result()
     resp = flask.Response(speech_recognition_results)
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Origin'] = 'https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com/'
     #result_word = str(speech_recognition_results['results'][0]['alternatives'][0]['transcript']).split(' ', 1)[0]
     #return speech_recognition_results
     return resp
