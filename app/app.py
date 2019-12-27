@@ -234,8 +234,11 @@ def watson_search():
     for i in request.headers.items():
         print(i)
     speech_recognition_results = speech_to_text.recognize(audio=myfile).get_result()
+    resp = flask.Response(speech_recognition_results)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
     #result_word = str(speech_recognition_results['results'][0]['alternatives'][0]['transcript']).split(' ', 1)[0]
-    return speech_recognition_results
+    #return speech_recognition_results
+    return resp
     #return("Return complete")
 
 @app.route('/prod_search', methods=['GET'])
@@ -257,19 +260,19 @@ def prod_search():
     select_qry = "SELECT *  FROM CCPRODCTLG use keys {}".format(str(result_keys))
     print(select_qry)
     select_qry_json = {"statement": select_qry}
-    print(select_qry_json)
+#     print(select_qry_json)
     w = requests.post(url=CB_QRY_URL, auth=cb_auth, json=select_qry_json)
     data1 = w.json()
     qry_res = data1['results']
-    print(qry_res)
+#     print(qry_res)
     resultarray = []
     search_return = {}
     for i in qry_res:
         one_row = i['CCPRODCTLG']
         resultarray.append(one_row)
-        print(i['CCPRODCTLG'])
+#         print(i['CCPRODCTLG'])
     search_return["plannedEvents"] = resultarray
-    print(search_return)
+#     print(search_return)
     return search_return
 
  
