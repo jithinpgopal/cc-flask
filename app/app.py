@@ -3,7 +3,7 @@ import mysql.connector
 from flask import request
 import ibm_boto3
 from ibm_botocore.client import Config, ClientError
-from flask import send_file
+from flask import send_file,Response
 from flask_cors import CORS,cross_origin
 import os
 from ibm_watson import SpeechToTextV1
@@ -278,9 +278,9 @@ def prod_search():
 #         print(i['CCPRODCTLG'])
     search_return["plannedEvents"] = resultarray
 #     print(search_return)
-    resp = make_response(search_return)
+    resp = flask.Response(search_return)
     print(resp)
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Origin'] = "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"
 #     return search_return
     return resp
 
