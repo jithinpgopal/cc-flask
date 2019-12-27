@@ -225,7 +225,7 @@ def find_image():
         return ("Image Not Found")
 
 @app.route('/watson_search', methods=['POST'])
-# @cross_origin()
+# @cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
 def watson_search():
     myfile  = request.files['file']
     #json_file =  request.get_json(force=True)
@@ -247,7 +247,7 @@ def watson_search():
     #return("Return complete")
 
 @app.route('/prod_search', methods=['GET'])
-# @cross_origin()
+@cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
 def prod_search():
     search_string = request.args.get('searchwords')
     search_array = search_string.split(' ')
