@@ -278,8 +278,11 @@ def prod_search():
 #         print(i['CCPRODCTLG'])
     search_return["plannedEvents"] = resultarray
 #     print(search_return)
-    return search_return
+    resp = make_response(search_return)
+    print(resp)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+#     return search_return
+    return resp
 
- 
 #app.run()
 app.run(host='0.0.0.0',port=5000,debug=True)
