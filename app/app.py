@@ -62,7 +62,9 @@ CB_QRY_URL  = "http://35.208.159.10:8093/query/service"
 ## Flask 
 app = flask.Flask(__name__)
 # CORS(app)
-CORS(app, resources={r"/*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
+# CORS(app, resources={r"/*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
+CORS(app, resources={"*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
+
 
 mycursor = mydb.cursor()
 mycursor.execute("SELECT ITEM_NUMBER,DESCRIPTION FROM sampledb.XXIBM_PRODUCT_SKU")
@@ -247,7 +249,7 @@ def watson_search():
     #return("Return complete")
 
 @app.route('/prod_search', methods=['GET'])
-@cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
+# @cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
 def prod_search():
     search_string = request.args.get('searchwords')
     search_array = search_string.split(' ')
