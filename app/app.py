@@ -279,9 +279,9 @@ def prod_search():
         resultarray.append(one_row)
 #         print(i['CCPRODCTLG'])
     search_return["plannedEvents"] = resultarray
-#     print(search_return)
-    resp = flask.Response(search_return)
-    resp.headers['Access-Control-Allow-Origin'] = "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"
+    print(search_return)
+    resp = flask.jsonify(search_return)
+    resp.headers.add('Access-Control-Allow-Origin','*')
 #     return search_return
 #     print(resp)
 #     print(resp.headers['Access-Control-Allow-Origin'])
