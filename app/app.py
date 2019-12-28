@@ -61,9 +61,9 @@ CB_QRY_URL  = "http://35.208.159.10:8093/query/service"
 
 ## Flask 
 app = flask.Flask(__name__)
-# CORS(app)
+CORS(app)
 # CORS(app, resources={r"/*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
-CORS(app, resources={"*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
+# CORS(app, resources={"*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
 
 
 mycursor = mydb.cursor()
@@ -280,9 +280,9 @@ def prod_search():
 #         print(i['CCPRODCTLG'])
     search_return["plannedEvents"] = resultarray
 #     print(search_return)
-#     resp = flask.Response(search_return)
-#     resp.headers['Access-Control-Allow-Origin'] = "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"
-    return search_return
+    resp = flask.Response(search_return)
+    resp.headers['Access-Control-Allow-Origin'] = "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"
+#     return search_return
 #     print(resp)
 #     print(resp.headers['Access-Control-Allow-Origin'])
     return resp
