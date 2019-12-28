@@ -245,7 +245,10 @@ def watson_search():
     print(speech_recognition_results)
 #     print(resp)
 #     return resp
-    return speech_recognition_results
+    resp = flask.jsonify(speech_recognition_results)
+    resp.headers.add('Access-Control-Allow-Origin','*')
+    return resp
+#     return speech_recognition_results
     #return("Return complete")
 
 @app.route('/prod_search', methods=['GET'])
