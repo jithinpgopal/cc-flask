@@ -63,7 +63,7 @@ CB_QRY_URL  = "http://35.208.159.10:8093/query/service"
 app = flask.Flask(__name__)
 CORS(app)
 # CORS(app, resources={r"/*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
-# CORS(app, resources={"*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
+CORS(app, resources={"*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
 
 
 mycursor = mydb.cursor()
@@ -228,6 +228,7 @@ def find_image():
 
 @app.route('/watson_search', methods=['POST'])
 # @cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
+@cross_origin()
 def watson_search():
     myfile  = request.files['file']
     #json_file =  request.get_json(force=True)
@@ -246,13 +247,14 @@ def watson_search():
 #     print(resp)
 #     return resp
     resp = flask.jsonify(speech_recognition_results)
-    resp.headers.add('Access-Control-Allow-Origin','*')
+#     resp.headers.add('Access-Control-Allow-Origin','*')
     return resp
 #     return speech_recognition_results
     #return("Return complete")
 
 @app.route('/prod_search', methods=['GET'])
 # @cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
+@cross_origin()
 def prod_search():
     search_string = request.args.get('searchwords')
     search_array = search_string.split(' ')
@@ -284,7 +286,7 @@ def prod_search():
     search_return["plannedEvents"] = resultarray
     print(search_return)
     resp = flask.jsonify(search_return)
-    resp.headers.add('Access-Control-Allow-Origin','*')
+#     resp.headers.add('Access-Control-Allow-Origin','*')
 #     return search_return
 #     print(resp)
 #     print(resp.headers['Access-Control-Allow-Origin'])
