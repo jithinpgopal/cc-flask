@@ -256,6 +256,7 @@ def watson_search():
 # @cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
 @cross_origin()
 def prod_search():
+    return ("MyReturn")
     search_string = request.args.get('searchwords')
     search_array = search_string.split(' ')
     conj_array = []
@@ -290,7 +291,7 @@ def prod_search():
 #     return search_return
 #     print(resp)
 #     print(resp.headers['Access-Control-Allow-Origin'])
-    return resp
+#     return resp
 
 #app.run()
 app.run(host='0.0.0.0',port=5000,debug=True)
