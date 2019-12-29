@@ -269,7 +269,6 @@ def prod_search():
     result_keys = []
     for i in data['hits']:
         result_keys.append(i['id'])
-    return(result_keys)
     select_qry = "SELECT *  FROM CCPRODCTLG use keys {}".format(str(result_keys))
     print(select_qry)
     select_qry_json = {"statement": select_qry}
@@ -291,7 +290,7 @@ def prod_search():
 #     return search_return
 #     print(resp)
 #     print(resp.headers['Access-Control-Allow-Origin'])
-#     return resp
+    return resp
 
 #app.run()
 app.run(host='0.0.0.0',port=5000,debug=True)
