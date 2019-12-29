@@ -256,7 +256,6 @@ def watson_search():
 # @cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
 @cross_origin()
 def prod_search():
-    return ("MyReturn")
     search_string = request.args.get('searchwords')
     search_array = search_string.split(' ')
     conj_array = []
@@ -270,6 +269,7 @@ def prod_search():
     result_keys = []
     for i in data['hits']:
         result_keys.append(i['id'])
+    return(result_keys)
     select_qry = "SELECT *  FROM CCPRODCTLG use keys {}".format(str(result_keys))
     print(select_qry)
     select_qry_json = {"statement": select_qry}
