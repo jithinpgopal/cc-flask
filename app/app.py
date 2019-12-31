@@ -55,9 +55,9 @@ speech_to_text.set_service_url('https://api.us-east.speech-to-text.watson.cloud.
 
 ## Couchbase Full Text Search
 
-CB_URL = "http://35.208.159.10:8094/api/index/prodsearch/query"
+CB_URL = "http://35.239.197.202:8094/api/index/prodsearch/query"
 cb_auth=HTTPBasicAuth('Administrator', 'asdf1234')
-CB_QRY_URL  = "http://35.208.159.10:8093/query/service"
+CB_QRY_URL  = "http://35.239.197.202:8093/query/service"
 
 ## Flask 
 app = flask.Flask(__name__)
