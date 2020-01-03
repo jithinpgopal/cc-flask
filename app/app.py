@@ -255,7 +255,7 @@ def watson_search():
 
 @app.route('/prod_search', methods=['GET'])
 # @cross_origin("origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com")
-@cross_origin()
+# @cross_origin()
 def prod_search():
     search_string = request.args.get('searchwords')
     search_array = search_string.split(' ')
@@ -287,7 +287,7 @@ def prod_search():
     search_return["plannedEvents"] = resultarray
     print(search_return)
     resp = flask.jsonify(search_return)
-#     resp.headers.add('Access-Control-Allow-Origin','*')
+    resp.headers.add('Access-Control-Allow-Origin','https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com')
     resp.headers.add("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
     return resp
     print(resp)
