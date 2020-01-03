@@ -63,7 +63,7 @@ CB_QRY_URL  = "http://35.239.197.202:8093/query/service"
 app = flask.Flask(__name__)
 CORS(app)
 # CORS(app, resources={r"/*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
-CORS(app, resources={"*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
+# CORS(app, resources={"*": {"origins": "https://frontendcontainercrush-cloud-warriors.inmbzp8022.in.dst.ibm.com"}})
 
 
 mycursor = mydb.cursor()
@@ -286,11 +286,12 @@ def prod_search():
     search_return["plannedEvents"] = resultarray
     print(search_return)
     resp = flask.jsonify(search_return)
-#     resp.headers.add('Access-Control-Allow-Origin','*')
-#     return search_return
-#     print(resp)
-#     print(resp.headers['Access-Control-Allow-Origin'])
-    return resp
+    resp.headers.add('Access-Control-Allow-Origin','*')
+    resp.headers.add("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
+    return search_return
+    print(resp)
+    print(resp.headers['Access-Control-Allow-Origin'])
+#     return resp
 
 #app.run()
 app.run(host='0.0.0.0',port=5000,debug=True)
