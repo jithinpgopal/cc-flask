@@ -288,7 +288,7 @@ def prod_search():
     resp = flask.jsonify(search_return)
     resp.headers.add('Access-Control-Allow-Origin','*')
     resp.headers.add("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
-    return search_return
+    return resp
     print(resp)
     print(resp.headers['Access-Control-Allow-Origin'])
 #     return resp
