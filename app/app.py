@@ -248,6 +248,7 @@ def watson_search():
 #     return resp
     resp = flask.jsonify(speech_recognition_results)
 #     resp.headers.add('Access-Control-Allow-Origin','*')
+    resp.headers.add("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
     return resp
 #     return speech_recognition_results
     #return("Return complete")
