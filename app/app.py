@@ -286,7 +286,7 @@ def prod_search():
     search_return["plannedEvents"] = resultarray
     print(search_return)
     resp = flask.jsonify(search_return)
-    resp.headers.add('Access-Control-Allow-Origin','*')
+#     resp.headers.add('Access-Control-Allow-Origin','*')
     resp.headers.add("Access-Control-Allow-Headers", "X-PINGOTHER,Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization")
     return resp
     print(resp)
