@@ -289,7 +289,7 @@ def prod_search():
         sub_qry["match"] = "*" + str(i) + "*"
         conj_array.append(sub_qry)
     qry = {"conjuncts": conj_array}
-    print ("query is : " + qry)
+    print ("query is : " + qry.json())
     r = requests.post(url=CB_URL, auth=cb_auth, json={"fields": ['*'], "highlight": {}, "query": qry, "size": 20})
     data = r.json()
     print ("printing couchbase fts result :")
