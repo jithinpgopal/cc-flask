@@ -287,7 +287,7 @@ def prod_search():
     for i in search_array:
         print ("search_array item  : " + str(i))
         sub_qry = {}
-        sub_qry["match"] = "*" + str(i) + "*"
+        sub_qry["wildcard"] = str(i) + "*"
         conj_array.append(sub_qry)
     qry = {"conjuncts": conj_array}
     print ("query content is : ")
