@@ -280,9 +280,11 @@ def watson_search():
 def prod_search():
     search_string = request.args.get('searchwords')
     filtered_string = nlp_filter(search_string)
+    print ("filtered string is : " + filtered_string)
     search_array = filtered_string.split(' ')
     conj_array = []
     for i in search_array:
+        print ("search_array item  : " + str(i))
         sub_qry = {}
         sub_qry["match"] = "*" + str(i) + "*"
         conj_array.append(sub_qry)
