@@ -189,6 +189,7 @@ def nlp_filter(string):
         tag = (m["partOfSpeech"]["tag"])
         if (tag == "ADJ") or (tag == "NOUN"):
             res_filtered = res_filtered + " " + word
+    res_filtered = res_filtered.strip()
     print(res_filtered)
     return res_filtered
 
