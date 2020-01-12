@@ -186,6 +186,8 @@ def nlp_filter(string):
     res_filtered = ""
     for m in nlp_res["tokens"]:
         word = (m["text"]["content"])
+        if (word[-1:].upper() == 'S'):
+            word = word[:-1]
         tag = (m["partOfSpeech"]["tag"])
         if (tag == "ADJ") or (tag == "NOUN"):
             res_filtered = res_filtered + " " + word
