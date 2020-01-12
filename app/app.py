@@ -169,7 +169,28 @@ def get_image(bucket_name, item_name):
     except Exception as e:
         print("Unable to retrieve file contents: {0}".format(e))
 
-
+def nlp_filter(string):
+    json_to_nlp = {
+        "encodingType": "UTF8",
+        "document": {
+            "type": "PLAIN_TEXT",
+            "content": string
+        }
+    }
+    API_KEY = "AIzaSyA7P94aGuFeHblIJvba4IAM0akoXnjv1pg"
+    NLP_URL = " https://language.googleapis.com/v1beta2/documents:analyzeSyntax"
+    params = {"key": API_KEY}
+    r = requests.post(url=NLP_URL, params=params, json=json_to_nlp)
+    nlp_res = r.json()
+    # print (nlp_res)
+    res_filtered = ""
+    for m in nlp_res["tokens"]:
+        word = (m["text"]["content"])
+        tag = (m["partOfSpeech"]["tag"])
+        if (tag == "ADJ") or (tag == "NOUN"):
+            res_filtered = res_filtered + " " + word
+    print(res_filtered)
+    return res_filtered
 
 
 # create_text_file('cloud-warriors', 'trial.txt', "Hellow")
@@ -258,7 +279,8 @@ def watson_search():
 # @cross_origin()
 def prod_search():
     search_string = request.args.get('searchwords')
-    search_array = search_string.split(' ')
+    filtered_string = nlp_filter(search_string)
+    search_array = filtered_string.split(' ')
     conj_array = []
     for i in search_array:
         sub_qry = {}
